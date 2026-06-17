@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Queso Philadelphia — Investigación Completa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold:       #BA7517;
+  --gold-light: #EF9F27;
+  --gold-pale:  #FAEEDA;
+  --gold-deep:  #633806;
+  --cream:      #FDF8F0;
+  --dark:       #1A1008;
+  --mid:        #4A3010;
+  --muted:      #8A7060;
+  --red:        #A32D2D;
+  --red-pale:   #FCEBEB;
+  --teal:       #0F6E56;
+  --teal-pale:  #E1F5EE;
+  --blue:       #185FA5;
+  --blue-pale:  #E6F1FB;
+  --border:     rgba(186,117,23,0.18);
+  --sans:       'DM Sans', sans-serif;
+  --serif:      'Playfair Display', serif;
+  --mono:       'DM Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--cream);
+  color: var(--dark);
+  overflow-x: hidden;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: var(--dark);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(186,117,23,0.22) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 10% 20%, rgba(186,117,23,0.08) 0%, transparent 60%);
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(186,117,23,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(186,117,23,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  margin-bottom: 1.6rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: '';
+  width: 36px;
+  height: 1px;
+  background: var(--gold-light);
+  opacity: 0.5;
+}
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(3.2rem, 9vw, 7.5rem);
+  font-weight: 900;
+  color: white;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  position: relative;
+  margin-bottom: 0.4rem;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold-light);
+  display: block;
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
+  margin-top: 1.6rem;
+  margin-bottom: 2.8rem;
+  max-width: 540px;
+  line-height: 1.65;
+  position: relative;
+}
+
+.hero-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 3rem;
+}
+.hero-tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: 99px;
+  border: 1px solid rgba(186,117,23,0.4);
+  color: var(--gold-light);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+.hero-tag:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: white;
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  font-family: var(--mono);
+  text-transform: uppercase;
+  animation: bob 2.2s ease-in-out infinite;
+}
+.scroll-cue svg { width: 16px; opacity: 0.4; }
+@keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+/* ── NAV ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(26,16,8,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(186,117,23,0.2);
+}
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-item {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  text-decoration: none;
+  padding: 1rem 1.1rem;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  letter-spacing: 0.03em;
+}
+.nav-item:hover { color: var(--gold-light); border-bottom-color: var(--gold); }
+.nav-item.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+
+/* ── LAYOUT ── */
+.container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+.section { padding: 6rem 0; }
+.section + .section { border-top: 1px solid var(--border); }
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  color: var(--dark);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.section-intro {
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 680px;
+  margin-bottom: 3rem;
+}
+
+/* ── DEFINICIÓN ── */
+.def-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.def-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+}
+.def-card.wide { grid-column: span 2; background: var(--gold-pale); border-color: rgba(186,117,23,0.3); }
+.def-card h3 {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--mid);
+  margin-bottom: 0.8rem;
+}
+.def-card p { font-size: 0.92rem; line-height: 1.75; color: var(--mid); }
+.def-card.wide p { color: var(--gold-deep); }
+
+/* ── TIMELINE ── */
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 8px; bottom: 8px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+}
+.tl-item {
+  position: relative;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.5s ease;
+}
+.tl-item.visible { opacity: 1; transform: translateX(0); }
+.tl-dot {
+  position: absolute;
+  left: -2.35rem;
+  top: 5px;
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 0 4px var(--cream);
+}
+.tl-year {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+  margin-bottom: 3px;
+}
+.tl-text { font-size: 0.93rem; line-height: 1.65; color: var(--mid); }
+
+/* ── COMPONENTES ── */
+.comp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.comp-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.4rem 1.2rem;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.comp-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(186,117,23,0.1); }
+.comp-pct {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.comp-name { font-size: 0.88rem; font-weight: 500; color: var(--mid); margin-bottom: 4px; }
+.comp-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+.nut-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.nut-table th {
+  background: var(--teal);
+  color: white;
+  font-weight: 500;
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.nut-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--mid); }
+.nut-table tr:nth-child(even) td { background: var(--teal-pale); }
+.nut-table td:first-child { font-weight: 500; color: var(--teal); }
+
+/* ── POLÉMICAS ── */
+.pol-list { display: flex; flex-direction: column; gap: 1rem; }
+.pol-card {
+  border-left: 3px solid var(--red);
+  background: var(--red-pale);
+  border-radius: 0 12px 12px 0;
+  padding: 1.2rem 1.5rem;
+}
+.pol-card h3 {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--red);
+  margin-bottom: 6px;
+}
+.pol-card p { font-size: 0.89rem; line-height: 1.7; color: var(--mid); }
+
+/* ── USOS ── */
+.usos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+.uso-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.6rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  transition: border-color 0.2s;
+}
+.uso-card:hover { border-color: var(--gold); }
+.uso-num {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--gold-pale);
+  line-height: 1;
+  min-width: 36px;
+  user-select: none;
+}
+.uso-content h3 {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--mid);
+  margin-bottom: 6px;
+}
+.uso-content p { font-size: 0.86rem; line-height: 1.7; color: var(--muted); }
+.uso-card.featured {
+  grid-column: span 2;
+  background: linear-gradient(135deg, #FAEEDA 0%, #FDF8F0 100%);
+  border-color: rgba(186,117,23,0.3);
+}
+
+/* ── DATOS ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+.stat-card {
+  background: var(--blue-pale);
+  border: 1px solid rgba(24,95,165,0.15);
+  border-radius: 12px;
+  padding: 1.4rem 1rem;
+  text-align: center;
+}
+.stat-num {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--blue);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-label { font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
+
+.fact-list { display: flex; flex-direction: column; gap: 0; }
+.fact-item {
+  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.2rem;
+  align-items: start;
+}
+.fact-num {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--gold);
+  font-weight: 500;
+  padding-top: 3px;
+  letter-spacing: 0.05em;
+}
+.fact-item h3 { font-size: 0.95rem; font-weight: 500; color: var(--mid); margin-bottom: 5px; }
+.fact-item p { font-size: 0.87rem; line-height: 1.7; color: var(--muted); }
+
+/* ── FOOTER ── */
+.site-footer {
+  background: var(--dark);
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+  padding: 3rem 2rem;
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+.site-footer strong { color: var(--gold-light); font-weight: 500; }
+
+/* ── ANIMATIONS ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  .def-grid { grid-template-columns: 1fr; }
+  .def-card.wide { grid-column: span 1; }
+  .comp-grid { grid-template-columns: repeat(2, 1fr); }
+  .usos-grid { grid-template-columns: 1fr; }
+  .uso-card.featured { grid-column: span 1; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .section { padding: 4rem 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-grid"></div>
+  <div class="hero-eyebrow">Investigación Gastronómica</div>
+  <h1>Queso<em>Philadelphia</em></h1>
+  <p class="hero-sub">Una investigación completa sobre el cream cheese más vendido del mundo: su historia, ciencia, controversias y usos.</p>
+  <div class="hero-tags">
+    <a href="#definicion" class="hero-tag">Definición</a>
+    <a href="#origen" class="hero-tag">Origen</a>
+    <a href="#componentes" class="hero-tag">Componentes</a>
+    <a href="#polemicas" class="hero-tag">Polémicas</a>
+    <a href="#usos" class="hero-tag">Usos</a>
+    <a href="#datos" class="hero-tag">Datos</a>
+  </div>
+  <div class="scroll-cue">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 10l5 5 5-5"/></svg>
+    scroll
+  </div>
+</section>
+
+<!-- NAV -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <a href="#definicion" class="nav-item">Definición</a>
+    <a href="#origen" class="nav-item">Origen</a>
+    <a href="#componentes" class="nav-item">Componentes</a>
+    <a href="#polemicas" class="nav-item">Polémicas</a>
+    <a href="#usos" class="nav-item">Usos</a>
+    <a href="#datos" class="nav-item">Datos</a>
+  </div>
+</nav>
+
+<!-- DEFINICIÓN -->
+<section class="section" id="definicion">
+  <div class="container">
+    <div class="section-label fade-in">01 — Definición</div>
+    <h2 class="section-title fade-in">¿Qué es exactamente?</h2>
+    <p class="section-intro fade-in">Un queso fresco que desafía la definición tradicional de queso, pero conquistó el mundo.</p>
+    <div class="def-grid fade-in">
+      <div class="def-card">
+        <h3>Clasificación técnica</h3>
+        <p>Queso crema fresco (cream cheese) de textura homogénea y altamente untable. No atraviesa maduración ni fermentación prolongada. Se produce por coagulación ácida de leche y crema.</p>
+      </div>
+      <div class="def-card">
+        <h3>Estándar FDA (desde 1938)</h3>
+        <p>Para llamarse "cream cheese" debe tener mínimo <strong>33% de grasa butírica</strong> y máximo 55% de humedad. El Philadelphia cumple exactamente el umbral mínimo de grasa.</p>
+      </div>
+      <div class="def-card">
+        <h3>Vs. Neufchâtel francés</h3>
+        <p>Su inspiración original usa solo leche y tiene 20–30% de grasa. El Philadelphia incorpora crema adicional, resultando en un producto más suave, más rico y fisicoquímicamente distinto.</p>
+      </div>
+      <div class="def-card">
+        <h3>En Europa</h3>
+        <p>Varios países lo comercializan bajo la denominación "preparado lácteo" para evitar conflictos con normativas de denominación de origen y estándares queseros locales.</p>
+      </div>
+      <div class="def-card wide">
+        <h3>La física detrás del untado</h3>
+        <p>El Philadelphia es técnicamente un <em>gel coloidal de grasa en agua</em> con comportamiento tixotrópico: se vuelve más fluido bajo la presión de un cuchillo y recupera rigidez en reposo. Glóbulos de grasa micronizados quedan atrapados en una red de proteínas lácteas y polisacáridos. Esta arquitectura coloidal es lo que lo hace untable sin que fluya ni se rompa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORIGEN -->
+<section class="section" id="origen">
+  <div class="container">
+    <div class="section-label fade-in">02 — Origen e Historia</div>
+    <h2 class="section-title fade-in">El nombre que nunca fue de Filadelfia</h2>
+    <p class="section-intro fade-in">Creado por accidente en Nueva York, bautizado con una ciudad con la que no tiene relación, y convertido en referencia mundial en 150 años.</p>
+    <div class="timeline fade-in">
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1872</div><div class="tl-text">William Lawrence crea el cream cheese en Chester, Nueva York, intentando replicar el Neufchâtel francés. La adición excesiva de crema produce accidentalmente un queso mucho más suave y untable.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1880</div><div class="tl-text">El distribuidor Alvah Reynolds adopta el nombre "Philadelphia Brand" como estrategia de marketing. En el siglo XIX, Filadelfia era sinónimo de calidad alimentaria premium en EE.UU.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1903</div><div class="tl-text">La empresa Phenix Cheese Co. adquiere la marca y amplía la distribución nacional en Estados Unidos.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1928</div><div class="tl-text">Kraft Foods adquiere Phenix Cheese, consolidando el control de la marca que mantendría durante décadas.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1938</div><div class="tl-text">La FDA establece el estándar legal de "cream cheese" — en gran parte porque el Philadelphia ya era tan dominante que su fórmula definió de facto la categoría entera.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1950s</div><div class="tl-text">La cheesecake de Nueva York consagra el Philadelphia como ingrediente icónico. Pionero en publicidad televisiva masiva para un producto lácteo.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1980–90s</div><div class="tl-text">Expansión global masiva. Lanzamiento de variedades light, con hierbas y sabores. El Philadelphia Roll se inventa en Norteamérica (no en Japón).</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2012</div><div class="tl-text">Kraft Foods se divide; Philadelphia pasa a Mondelēz Internacional, que hoy controla ~65% del mercado mundial de cream cheese.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2022</div><div class="tl-text">Crisis de escasez en el Reino Unido post-Brexit. Filas en supermercados, acaparamiento y mercado secundario en eBay a precios inflados.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2025</div><div class="tl-text">El cream cheese más vendido del mundo en más de 100 países. Su nombre se ha lexicalizado en varios mercados hispanohablantes como sinónimo genérico del producto.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPONENTES -->
+<section class="section" id="componentes">
+  <div class="container">
+    <div class="section-label fade-in">03 — Componentes</div>
+    <h2 class="section-title fade-in">Composición y Nutrición</h2>
+    <p class="section-intro fade-in">Una fórmula deceptivamente simple que esconde una ingeniería alimentaria precisa.</p>
+
+    <div class="comp-grid fade-in">
+      <div class="comp-card"><div class="comp-pct">~45%</div><div class="comp-name">Crema de leche</div><div class="comp-desc">Base lipídica. Confiere riqueza y textura.</div></div>
+      <div class="comp-card"><div class="comp-pct">~40%</div><div class="comp-name">Leche entera</div><div class="comp-desc">Aporta proteínas caseínas y estructura.</div></div>
+      <div class="comp-card"><div class="comp-pct">~1%</div><div class="comp-name">Sal</div><div class="comp-desc">Conservación, palatabilidad y control microbiano.</div></div>
+      <div class="comp-card"><div class="comp-pct">&lt;0.5%</div><div class="comp-name">Goma xantana</div><div class="comp-desc">Previene la sinéresis (expulsión de líquido).</div></div>
+      <div class="comp-card"><div class="comp-pct">&lt;0.5%</div><div class="comp-name">Goma guar</div><div class="comp-desc">Retención de agua y cremosidad estable.</div></div>
+      <div class="comp-card"><div class="comp-pct">trazas</div><div class="comp-name">Cultivos lácticos</div><div class="comp-desc">Acidificación controlada y desarrollo del sabor.</div></div>
+    </div>
+
+    <h3 style="font-family:var(--serif);font-size:1.4rem;color:var(--mid);margin-bottom:1rem;" class="fade-in">Perfil nutricional por 30 g</h3>
+    <table class="nut-table fade-in">
+      <thead><tr><th>Nutriente</th><th>Cantidad</th><th>Observación</th></tr></thead>
+      <tbody>
+        <tr><td>Calorías</td><td>~100 kcal</td><td>Densidad energética moderada-alta</td></tr>
+        <tr><td>Grasa total</td><td>9 g</td><td>De origen lácteo, predominantemente saturada</td></tr>
+        <tr><td>Grasa saturada</td><td>6 g</td><td>30% del límite diario recomendado (OMS)</td></tr>
+        <tr><td>Proteína</td><td>1.8 g</td><td>Baja comparada con otros lácteos</td></tr>
+        <tr><td>Carbohidratos</td><td>1.6 g</td><td>Principalmente lactosa residual</td></tr>
+        <tr><td>Sodio</td><td>95 mg</td><td>Relevante para personas hipertensas</td></tr>
+        <tr><td>Calcio</td><td>3% VD</td><td>Aporte modesto vs. quesos madurados</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- POLÉMICAS -->
+<section class="section" id="polemicas">
+  <div class="container">
+    <div class="section-label fade-in">04 — Polémicas</div>
+    <h2 class="section-title fade-in">Los debates que genera</h2>
+    <p class="section-intro fade-in">De la regulación alimentaria a la psicología del consumidor, el Philadelphia ha protagonizado controversias sorprendentes.</p>
+    <div class="pol-list fade-in">
+      <div class="pol-card">
+        <h3>¿Es realmente queso?</h3>
+        <p>Artesanos queseros y tecnólogos de alimentos cuestionan si merece el nombre "queso" por su proceso industrializado, estabilizantes y ausencia de maduración. En varios países de la UE se vende como "preparado lácteo".</p>
+      </div>
+      <div class="pol-card">
+        <h3>La crisis de escasez del Reino Unido (2022)</h3>
+        <p>El post-Brexit interrumpió cadenas de suministro lácteo. La escasez de Philadelphia generó pánico social, filas en supermercados y un mercado secundario en eBay con precios inflados — revelando hasta qué punto un producto industrial puede volverse culturalmente indispensable.</p>
+      </div>
+      <div class="pol-card">
+        <h3>Grasa saturada y salud cardiovascular</h3>
+        <p>Con 6g de grasa saturada por porción (30% del límite OMS), la OMS ha señalado el perfil lipídico como preocupante. La variedad "light" reduce la grasa pero añade más aditivos, abriendo un segundo debate sobre ingredientes "limpios".</p>
+      </div>
+      <div class="pol-card">
+        <h3>Demandas por marketing engañoso (EE.UU., 2013 y 2019)</h3>
+        <p>Kraft enfrentó acciones colectivas por publicitar el producto como "hecho con leche de calidad" cuando las condiciones de producción industrial de sus insumos eran cuestionadas. Ambos casos se resolvieron extrajudicialmente sin admisión de culpa.</p>
+      </div>
+      <div class="pol-card">
+        <h3>Monopolio de marca y desplazamiento artesanal</h3>
+        <p>Mondelēz controla ~65% del mercado mundial. Productores artesanales denuncian que esto invisibiliza alternativas superiores. En México, España y Argentina, "Philadelphia" se usa como genérico independientemente de la marca comprada.</p>
+      </div>
+      <div class="pol-card">
+        <h3>El escepticismo sobre conservantes y vida útil</h3>
+        <p>Hasta 6 meses de vida útil sin conservantes artificiales genera desconfianza. La explicación: pasteurización UHT y envasado aséptico que eliminan microorganismos sin aditivos. La sal y el pH ácido hacen el resto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USOS -->
+<section class="section" id="usos">
+  <div class="container">
+    <div class="section-label fade-in">05 — Usos culinarios</div>
+    <h2 class="section-title fade-in">De la cheesecake al sushi</h2>
+    <p class="section-intro fade-in">Un ingrediente que atraviesa culturas, técnicas y continentes con sorprendente versatilidad.</p>
+    <div class="usos-grid fade-in">
+      <div class="uso-card featured">
+        <div class="uso-num">01</div>
+        <div class="uso-content">
+          <h3>Cheesecake de Nueva York</h3>
+          <p>Uso más emblemático a nivel global. La textura densa y el sabor ligeramente ácido del Philadelphia son considerados técnicamente irreemplazables en la versión "clásica". La combinación de grasa láctea, proteínas y acidez genera una estructura de gel al hornearse que ningún otro ingrediente replica exactamente.</p>
+        </div>
+      </div>
+      <div class="uso-card">
+        <div class="uso-num">02</div>
+        <div class="uso-content">
+          <h3>Philadelphia Roll (sushi)</h3>
+          <p>Invención norteamericana de los 80s. Nunca existió en Japón hasta que fue reintroducido como curiosidad "occidental". Combina salmón ahumado, aguacate y Philadelphia.</p>
+        </div>
+      </div>
+      <div class="uso-card">
+        <div class="uso-num">03</div>
+        <div class="uso-content">
+          <h3>Bagel con lox</h3>
+          <p>Tradición judeoamericana: bagel tostado, Philadelphia, salmón ahumado en frío, alcaparras y cebolla roja. Desayuno identitario de la cultura ashkenazi de Nueva York.</p>
+        </div>
+      </div>
+      <div class="uso-card">
+        <div class="uso-num">04</div>
+        <div class="uso-content">
+          <h3>Huevos al estilo Ramsay</h3>
+          <p>Una cucharada de Philadelphia fuera del fuego al final da cremosidad, brillo y untuosidad que la mantequilla sola no logra, gracias a la emulsión de grasas y proteínas.</p>
+        </div>
+      </div>
+      <div class="uso-card">
+        <div class="uso-num">05</div>
+        <div class="uso-content">
+          <h3>Salsas y dips calientes</h3>
+          <p>Su capacidad de fundirse sin cortarse lo hace ideal para artichoke dip, jalapeño popper dip y fondues. Mantiene emulsión estable incluso a calor moderado gracias a sus estabilizantes.</p>
+        </div>
+      </div>
+      <div class="uso-card">
+        <div class="uso-num">06</div>
+        <div class="uso-content">
+          <h3>Frosting de repostería</h3>
+          <p>Mezclado con mantequilla y azúcar glass produce el frosting clásico para carrot cake y red velvet. La acidez del queso contrasta con el dulzor, generando un perfil más complejo que el buttercream.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATOS -->
+<section class="section" id="datos">
+  <div class="container">
+    <div class="section-label fade-in">06 — Datos sorprendentes</div>
+    <h2 class="section-title fade-in">Números y curiosidades</h2>
+    <p class="section-intro fade-in">Estadísticas y fenómenos que revelan la magnitud cultural y comercial del producto.</p>
+    <div class="stats-row fade-in">
+      <div class="stat-card"><div class="stat-num">150+</div><div class="stat-label">años de historia continua bajo la misma marca</div></div>
+      <div class="stat-card"><div class="stat-num">100+</div><div class="stat-label">países donde se comercializa actualmente</div></div>
+      <div class="stat-card"><div class="stat-num">~$3B</div><div class="stat-label">USD en ventas anuales globales estimadas</div></div>
+      <div class="stat-card"><div class="stat-num">65%</div><div class="stat-label">cuota del mercado mundial de cream cheese</div></div>
+    </div>
+    <div class="fact-list fade-in">
+      <div class="fact-item">
+        <div class="fact-num">01</div>
+        <div>
+          <h3>El estándar que definió una categoría entera</h3>
+          <p>La FDA estableció el estándar legal de "cream cheese" en 1938 en gran parte porque el Philadelphia ya era tan dominante que su fórmula definió de facto lo que la categoría debía ser. Es uno de los pocos casos en la historia regulatoria donde una marca privada dictó el estándar público.</p>
+        </div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-num">02</div>
+        <div>
+          <h3>El Philadelphia Roll nunca fue japonés</h3>
+          <p>Este popular roll de sushi fue inventado en Norteamérica en los 80s y no existió en Japón durante décadas. Cuando llegó al mercado japonés fue presentado como una rareza "occidental" — un producto que viajó del este al oeste y regresó al este con una identidad completamente diferente.</p>
+        </div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-num">03</div>
+        <div>
+          <h3>La lexicalización más exitosa del sector lácteo</h3>
+          <p>En México, España y Argentina, "pedir Philadelphia" significa cualquier cream cheese, independientemente de la marca. Los lingüistas denominan esto "antonomasia comercial" o "genericización de marca". Mondelēz lleva años combatiéndolo jurídicamente con resultados muy limitados.</p>
+        </div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-num">04</div>
+        <div>
+          <h3>Pionero en publicidad televisiva de alimentos</h3>
+          <p>En los años 50, Philadelphia fue uno de los primeros productos lácteos en tener una campaña televisiva masiva a nivel nacional en EE.UU., estableciendo convenciones del marketing alimentario que toda la industria adoptaría posteriormente.</p>
+        </div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-num">05</div>
+        <div>
+          <h3>La física compleja de un acto cotidiano</h3>
+          <p>Untar Philadelphia en un bagel implica un proceso fisicoquímico más sofisticado de lo que parece: el producto exhibe comportamiento tixotrópico — se fluidifica bajo tensión de corte (la presión del cuchillo) y recupera rigidez en reposo. Esta propiedad es resultado directo de su arquitectura coloidal.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <p><strong>Queso Philadelphia — Investigación Gastronómica</strong></p>
+  <p style="margin-top:6px;">Documento de divulgación científica y cultural · 2025</p>
+  <p style="margin-top:6px;font-size:0.72rem;">Esta página es un resumen de investigación con fines informativos y divulgativos.</p>
+</footer>
+
+<script>
+// Intersection Observer para animaciones
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in, .tl-item').forEach(el => io.observe(el));
+
+// Active nav
+const sections = document.querySelectorAll('section[id]');
+const navItems = document.querySelectorAll('.nav-item');
+
+const navObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navItems.forEach(n => n.classList.remove('active'));
+      const active = document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-40% 0px -55% 0px' });
+
+sections.forEach(s => navObs.observe(s));
+</script>
+</body>
+</html>

@@ -1,0 +1,752 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Philadelphia: Historia, Ciencia y Cultura del Cream Cheese</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    /* ─── tokens ───────────────────────────────────────────────────────── */
+    :root {
+      --graphite:  #30323D;
+      --alabaster: #DBDBDB;
+      --white:     #FFFFFF;
+      --royal-blue: #4B67E2;
+      --old-gold:   #D8BC32;
+      
+      --bg:      var(--white);
+      --fg:      var(--graphite);
+      --accent:  var(--royal-blue);
+      --accent-alt: var(--old-gold);
+
+      --font-display: 'Playfair Display', serif;
+      --font-body:    'DM Sans', sans-serif;
+      --font-ui:      'Outfit', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+
+      --fs-h1: clamp(64px, 12vw, 160px);
+      --fs-h2: clamp(48px, 8vw, 84px);
+      --fs-h3: clamp(28px, 4vw, 40px);
+      --fs-lead: 22px;
+      --fs-body: 18px;
+
+      --gap-xl: 80px;
+      --gap-2xl: 160px;
+      --container: 1200px;
+      
+      /* Curves */
+      --radius-xl: 80px;
+      --radius-lg: 40px;
+      --radius-pill: 999px;
+      --radius-asym: 60px 20px 60px 20px;
+    }
+
+    /* ─── reset & base ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--white);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: var(--fs-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; margin: 0; text-wrap: balance; }
+
+    /* ─── layout primitives ─────────────────────────────────────────── */
+    .container { max-width: var(--container); margin-inline: auto; padding-inline: 40px; position: relative; }
+    .section { padding-block: var(--gap-xl); position: relative; }
+    .stack { display: flex; flex-direction: column; gap: 32px; }
+    .grid-2 { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 64px; align-items: center; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    
+    @media (max-width: 1024px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    /* ─── animations ────────────────────────────────────────────────── */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    [data-reveal].revealed {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    @keyframes morphBlob {
+      0% { border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%; }
+      33% { border-radius: 60% 40% 40% 60% / 60% 60% 40% 40%; }
+      66% { border-radius: 45% 55% 35% 65% / 55% 45% 65% 35%; }
+      100% { border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, -10px); }
+    }
+
+    /* ─── zone styling ──────────────────────────────────────────────── */
+    .zone-graphite { background: var(--graphite); color: var(--white); --fg: var(--white); --accent: var(--royal-blue); --accent-alt: var(--old-gold); }
+    .zone-blue { background: var(--royal-blue); color: var(--white); --fg: var(--white); --accent: var(--old-gold); }
+    .zone-gold { background: var(--old-gold); color: var(--graphite); --fg: var(--graphite); --accent: var(--royal-blue); }
+    .zone-white { background: var(--white); color: var(--graphite); --fg: var(--graphite); }
+
+    /* ─── components ────────────────────────────────────────────────── */
+    .eyebrow-pill {
+      display: inline-flex; padding: 10px 24px; border-radius: var(--radius-pill);
+      font-family: var(--font-mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em;
+      background: var(--accent); color: var(--white); margin-bottom: 24px;
+    }
+    .zone-gold .eyebrow-pill { background: var(--royal-blue); color: white; }
+    .zone-blue .eyebrow-pill { background: var(--old-gold); color: var(--graphite); }
+
+    .btn-pill {
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 18px 40px; border-radius: var(--radius-pill);
+      font-family: var(--font-ui); font-weight: 800; font-size: 16px; text-transform: uppercase;
+      transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-primary { background: var(--royal-blue); color: var(--white); box-shadow: 0 10px 30px rgba(75, 103, 226, 0.3); }
+    .btn-primary:hover { transform: translateY(-8px) scale(1.05); box-shadow: 0 20px 40px rgba(75, 103, 226, 0.4); }
+
+    .card-asym {
+      background: var(--white); color: var(--graphite); padding: 48px; border-radius: var(--radius-asym);
+      transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .zone-gold .card-asym { background: var(--graphite); color: var(--white); }
+    .card-asym:hover { transform: translateY(-12px) rotate(-1deg); box-shadow: 0 40px 80px rgba(0,0,0,0.1); }
+
+    .stat-circle {
+      width: clamp(200px, 25vw, 320px); height: clamp(200px, 25vw, 320px);
+      border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: var(--white); color: var(--graphite); border: 2px solid var(--accent);
+      transition: 0.5s ease;
+    }
+    .stat-circle:nth-child(even) { transform: translateY(40px); width: clamp(160px, 20vw, 260px); height: clamp(160px, 20vw, 260px); }
+    .stat-val { font-family: var(--font-display); font-size: 64px; font-weight: 900; color: var(--accent); line-height: 1; }
+    .stat-label { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; margin-top: 8px; }
+
+    /* ─── wave dividers ─────────────────────────────────────────────── */
+    .wave-container { position: relative; width: 100%; height: 80px; margin-top: -1px; margin-bottom: -1px; z-index: 5; }
+    .wave-container svg { width: 100%; height: 100%; }
+
+    /* ─── specific components ───────────────────────────────────────── */
+    .hero-blob {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 80vw; height: 80vw; max-width: 900px; max-height: 900px;
+      background: var(--royal-blue); opacity: 0.15;
+      animation: morphBlob 15s infinite alternate ease-in-out;
+      z-index: -1;
+    }
+
+    .timeline-path {
+      position: absolute; left: 50%; transform: translateX(-50%); top: 0; bottom: 0;
+      width: 100%; max-width: 800px; z-index: 0;
+    }
+    .timeline-item { position: relative; width: 100%; display: flex; justify-content: flex-start; margin-bottom: 120px; z-index: 1; }
+    .timeline-item:nth-child(even) { justify-content: flex-end; }
+    .timeline-content { max-width: 40%; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 40px; border-radius: 40px; }
+    .timeline-year { font-family: var(--font-display); font-size: 48px; font-weight: 900; color: var(--old-gold); margin-bottom: 16px; }
+
+    .recipe-card {
+      background: var(--white); color: var(--graphite); border-radius: 40px; overflow: hidden;
+      transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative;
+    }
+    .recipe-card:hover { transform: translateY(-16px) rotate(1.5deg); box-shadow: 0 40px 100px rgba(0,0,0,0.4); }
+    .recipe-tag { position: absolute; top: 20px; right: 24px; padding: 6px 16px; border-radius: 100px; font-family: var(--font-mono); font-size: 11px; }
+
+    .controversy-pill {
+      border: 2px solid var(--royal-blue); border-radius: 100px; padding: 24px 40px; cursor: pointer;
+      transition: 0.4s ease; overflow: hidden; margin-bottom: 16px;
+    }
+    .controversy-pill:hover { background: rgba(75, 103, 226, 0.05); transform: scale(1.02); }
+    .controversy-content { max-height: 0; transition: 0.5s ease; opacity: 0; }
+    .controversy-pill.open { border-radius: 40px; background: white; }
+    .controversy-pill.open .controversy-content { max-height: 200px; opacity: 1; padding-top: 24px; }
+
+    /* ─── navigation ────────────────────────────────────────────────── */
+    .topnav {
+      position: fixed; top: 32px; left: 50%; transform: translateX(-50%); width: calc(100% - 64px); max-width: 1000px;
+      background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); border-radius: 100px;
+      padding: 12px 32px; z-index: 1000; display: flex; justify-content: space-between; align-items: center;
+      transition: 0.5s ease; border: 1px solid rgba(0,0,0,0.05);
+    }
+    .topnav.scrolled { top: 16px; background: var(--graphite); color: white; border-color: rgba(255,255,255,0.1); }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { font-family: var(--font-ui); font-size: 13px; font-weight: 600; text-transform: uppercase; color: inherit; opacity: 0.6; }
+    .nav-links a.active { opacity: 1; color: var(--royal-blue); }
+    .topnav.scrolled .nav-links a.active { color: var(--old-gold); }
+    
+    @media (max-width: 920px) {
+      .nav-links { display: none; }
+      .timeline-content { max-width: 80%; }
+      .timeline-item { justify-content: center !important; }
+    }
+
+    /* ─── audio control ─────────────────────────────────────────────── */
+    .audio-control {
+      position: fixed; bottom: 32px; right: 32px; z-index: 1001;
+      width: 52px; height: 52px; border-radius: 50%; border: none; cursor: pointer;
+      background: rgba(255,255,255,0.85); backdrop-filter: blur(20px);
+      color: var(--graphite); box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      display: flex; align-items: center; justify-content: center;
+      transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .audio-control:hover { transform: scale(1.1); background: var(--royal-blue); color: white; }
+    .audio-control.playing { background: var(--royal-blue); color: white; }
+    .audio-control svg { width: 22px; height: 22px; }
+  </style>
+</head>
+<body>
+
+  <nav class="topnav" id="topnav">
+    <a href="#" class="h3" style="font-weight: 900; letter-spacing: -0.05em; font-size: 24px; font-family: var(--font-display);">Philly.</a>
+    <div class="nav-links">
+      <a href="#definition">Física</a>
+      <a href="#history">Origen</a>
+      <a href="#science">Bio</a>
+      <a href="#nutrition">Salud</a>
+      <a href="#recipes">Cocina</a>
+    </div>
+    <a href="#recipes" class="btn-pill btn-primary" style="padding: 10px 24px; font-size: 13px;">Probar</a>
+  </nav>
+
+  <main>
+    <!-- [1] HERO: Zona Graphite -->
+    <section class="section zone-graphite" id="home" style="min-height: 100vh; display: flex; align-items: center; padding-top: 160px; overflow: hidden;">
+      <div class="hero-blob"></div>
+      <div class="container" style="z-index: 2;">
+        <span class="eyebrow-pill" data-reveal style="background: var(--old-gold); color: var(--graphite);">Papers Académicos · Ciencia Láctea</span>
+        <h1 class="h1" data-reveal style="margin-bottom: 24px;">
+          Todo sobre el <br>
+          <span style="font-style: italic; font-weight: 100; font-size: 1.3em; display: block; margin-left: -0.05em;">Philadelphia</span>
+        </h1>
+        <p class="lead" data-reveal style="max-width: 32ch; opacity: 0.8; font-size: 24px;">
+          Spoiler: untarlo en tu bagel involucra física cuántica coloidal. (Bueno, casi.)
+        </p>
+        
+        <div class="stack" style="flex-direction: row; flex-wrap: wrap; gap: 16px; margin-top: 64px;" data-reveal>
+          <a href="#definition" class="btn-pill" style="border: 2px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);">Definición</a>
+          <a href="#history" class="btn-pill" style="border: 2px solid rgba(255,255,255,0.2);">Historia</a>
+          <a href="#science" class="btn-pill" style="border: 2px solid rgba(255,255,255,0.2);">Ciencia</a>
+          <a href="#recipes" class="btn-pill" style="background: var(--royal-blue);">12 Recetas</a>
+        </div>
+      </div>
+      
+      <div style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite;">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="19" stroke="white" stroke-width="2" opacity="0.3"/>
+          <path d="M12 18L20 26L28 18" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </section>
+
+    <div class="wave-container">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--white)"/></svg>
+    </div>
+
+    <!-- [2] DEFINICIÓN: Zona Blanca + Blue -->
+    <section class="section zone-white" id="definition">
+      <div class="container grid-2">
+        <div class="stack" data-reveal>
+          <span class="eyebrow-pill">Viscoelasticidad</span>
+          <h2 class="h2">¿Un sólido que fluye? Bienvenida la Física.</h2>
+          <p class="lead">Estructuralmente, el Philadelphia es un <strong>gel coloidal</strong>. Imagina una red microscópica de proteínas atrapando gotas de grasa y suero en un baile eterno.</p>
+          <p>Es <em>tixotrópico</em>: cuando lo presionas con el cuchillo, se rinde y se vuelve fluido; cuando dejas de moverlo, recupera su orgullo y se queda firme en tu tostada. Magia técnica.</p>
+          <div style="margin-top: 32px;">
+            <a href="#science" class="btn-pill" style="background: var(--royal-blue); color: white;">Explorar la microestructura</a>
+          </div>
+        </div>
+        
+        <div class="grid-2" style="grid-template-columns: 1fr; gap: 24px;" data-reveal>
+          <div class="card-asym" style="background: var(--royal-blue); color: white;">
+            <h3 class="h3" style="font-size: 24px; margin-bottom: 8px;">vs. Mascarpone</h3>
+            <p style="font-size: 15px; opacity: 0.9;">El Mascarpone es pura crema coagulada por ácido. Más dulce, más graso, menos rebelde que nuestro gel coloidal.</p>
+          </div>
+          <div class="card-asym" style="border: 2px solid var(--royal-blue); border-radius: 20px 60px 20px 60px;">
+            <h3 class="h3" style="font-size: 24px; margin-bottom: 8px;">Ficha Técnica (FDA)</h3>
+            <p class="num" style="font-weight: 700;">Mín. 33% Grasa · Máx. 55% Humedad · pH 4.4 - 4.9</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wave-container">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,0 1080,80 1440,40 L1440,80 L0,80 Z" fill="var(--royal-blue)"/></svg>
+    </div>
+
+    <!-- [3] HISTORIA: Zona Blue -->
+    <section class="section zone-blue" id="history" style="padding-bottom: 120px;">
+      <div class="container" style="text-align: center; margin-bottom: 80px;">
+        <span class="eyebrow-pill">El Gran Farol de Marketing</span>
+        <h2 class="h2">Nació en Nueva York, <br>pero se llamó Filadelfia.</h2>
+        <p class="lead" style="margin-inline: auto; opacity: 0.8;">En 1880, Filadelfia era el "Apple" de los lácteos. Así que un vendedor de Nueva York decidió robarles el aura. Brillante.</p>
+      </div>
+
+      <div class="container" style="position: relative;">
+        <div class="timeline-path">
+          <svg width="100%" height="1000" viewBox="0 0 800 1000" fill="none">
+            <path d="M400,0 C600,200 200,400 400,600 S600,800 400,1000" stroke="var(--old-gold)" stroke-width="4" stroke-dasharray="10 10" opacity="0.3"/>
+          </svg>
+        </div>
+
+        <div class="timeline-item" data-reveal>
+          <div class="timeline-content">
+            <div class="timeline-year">1872</div>
+            <h3 class="h3">El error de Lawrence</h3>
+            <p>William Lawrence buscaba hacer Neufchâtel y terminó creando el cream cheese más rico de la historia por accidente. Bendito error.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-reveal>
+          <div class="timeline-content">
+            <div class="timeline-year">1928</div>
+            <h3 class="h3">El Imperio Kraft</h3>
+            <p>La unión con Kraft trajo la pasteurización y la tarrina de plata que conquistaría el mundo entero.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-reveal>
+          <div class="timeline-content">
+            <div class="timeline-year">2021</div>
+            <h3 class="h3">El Gran Apagón</h3>
+            <p>Un ciberataque causó la "Gran Escasez de Philadelphia". Internet entró en pánico por sus cheesecakes de Navidad.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wave-container">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--white)"/></svg>
+    </div>
+
+    <!-- [4] NUTRICIÓN: Zona Blanca + Gold -->
+    <section class="section zone-white" id="nutrition">
+      <div class="container grid-2">
+        <div class="stack" data-reveal>
+          <span class="eyebrow-pill" style="background: var(--old-gold); color: var(--graphite);">Metabolismo</span>
+          <h2 class="h2">La ciencia cambió de opinión. Aquí está el chisme.</h2>
+          <p class="lead">Durante décadas nos dijeron que la grasa saturada era el villano. Hoy sabemos que la <strong>Matriz Láctea</strong> importa más que el gramaje aislado.</p>
+          <p>Estudios como PURE (The Lancet) sugieren que los lácteos enteros no son los culpables de todo. Aun así, moderación es la clave: esto es una delicia técnica, no una ensalada.</p>
+        </div>
+        
+        <div class="card-asym" style="border: 2px solid var(--old-gold);" data-reveal>
+          <h3 class="h3" style="margin-bottom: 32px;">Nutrientes por 100g</h3>
+          <div class="stack" style="gap: 24px;">
+            <div>
+              <div class="row-between" style="font-family: var(--font-mono); font-size: 14px; margin-bottom: 8px;">
+                <span>Grasas Totales</span>
+                <span class="num">34g</span>
+              </div>
+              <div style="height: 12px; background: var(--alabaster); border-radius: 10px; overflow: hidden;">
+                <div style="width: 34%; height: 100%; background: var(--old-gold);"></div>
+              </div>
+            </div>
+            <div>
+              <div class="row-between" style="font-family: var(--font-mono); font-size: 14px; margin-bottom: 8px;">
+                <span>Proteínas</span>
+                <span class="num">6g</span>
+              </div>
+              <div style="height: 12px; background: var(--alabaster); border-radius: 10px; overflow: hidden;">
+                <div style="width: 15%; height: 100%; background: var(--royal-blue);"></div>
+              </div>
+            </div>
+            <p class="meta" style="margin-top: 16px;">Fuente de Vitamina A, B12 y Riboflavina. Un cocktail lácteo concentrado.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wave-container">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,0 1080,80 1440,40 L1440,80 L0,80 Z" fill="var(--old-gold)"/></svg>
+    </div>
+
+    <!-- [5] CIENCIA: Zona Gold -->
+    <section class="section zone-gold" id="science" style="color: var(--graphite);">
+      <div class="container stack" style="text-align: center; margin-bottom: 80px;">
+        <span class="eyebrow-pill" style="background: var(--royal-blue); color: white;">Bioingeniería</span>
+        <h2 class="h2">Dentro del Micro-Mundo</h2>
+        <p class="lead" style="margin-inline: auto;">¿Cómo se pasa de leche líquida a esta crema sedosa? Tres pasos críticos.</p>
+      </div>
+
+      <div class="container grid-3">
+        <div class="card-asym" data-reveal style="background: var(--graphite); color: white;">
+          <h3 class="h3" style="color: var(--old-gold); margin-bottom: 16px;">1. Acidificación</h3>
+          <p>Bacterias lácticas <em>mesófilas</em> bajan el pH hasta 4.6. Es el "punto isoeléctrico" donde la leche decide volverse queso.</p>
+        </div>
+        <div class="card-asym" data-reveal style="background: var(--graphite); color: white; transform: translateY(40px);">
+          <h3 class="h3" style="color: var(--old-gold); margin-bottom: 16px;">2. Homogeneización</h3>
+          <p>Presión extrema para romper la grasa. Sin este paso, el Philadelphia sería un caos de grumos en lugar de una seda.</p>
+        </div>
+        <div class="card-asym" data-reveal style="background: var(--graphite); color: white;">
+          <h3 class="h3" style="color: var(--old-gold); margin-bottom: 16px;">3. Estabilización</h3>
+          <p>Gomas naturales (Xantana, Guar) para evitar la <strong>sinéresis</strong>. Porque a nadie le gusta encontrar un charco de agua sobre el queso.</p>
+        </div>
+      </div>
+      
+      <div class="container" style="margin-top: 120px; text-align: center; opacity: 0.6;" data-reveal>
+        <p class="meta">Refs: Brighenti (2008) · Bayarri (2012) · J. Dairy Science</p>
+      </div>
+    </section>
+
+    <div class="wave-container">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--white)"/></svg>
+    </div>
+
+    <!-- [6] CULTURA: Zona Blanca + Blue -->
+    <section class="section zone-white" id="culture">
+      <div class="container grid-2">
+        <div class="ph-img wide" style="border-radius: 80px; background: var(--royal-blue); color: white; border: none;" data-reveal>
+          [ Ilustración: Bagel + Philadelphia + Lox ]
+        </div>
+        <div class="stack" data-reveal>
+          <span class="eyebrow-pill">Fenómeno Pop</span>
+          <h2 class="h2">De New York a Tokyo.</h2>
+          <p class="lead">El <strong>Philadelphia Roll</strong> nació en 1981 como un tributo a la ciudad. Madame Saito mezcló el sushi con el schmear judío y cambió el juego para siempre.</p>
+          <p>En España e Italia, la marca es tan fuerte que hemos olvidado que "Philadelphia" es un nombre propio; se ha convertido en el genérico de la felicidad untable.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="wave-container">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,0 1080,80 1440,40 L1440,80 L0,80 Z" fill="var(--graphite)"/></svg>
+    </div>
+
+    <!-- [7] RECETAS: Zona Graphite -->
+    <section class="section zone-graphite" id="recipes">
+      <div class="container stack" style="text-align: center; margin-bottom: 80px;">
+        <span class="eyebrow-pill" style="background: var(--royal-blue);">Laboratorio Culinario</span>
+        <h2 class="h2">12 Formas de Dominar la Textura</h2>
+        <p class="lead" style="margin-inline: auto; opacity: 0.7;">No es solo sabor; es el pegamento secreto de la alta cocina.</p>
+      </div>
+
+      <div class="container grid-3" style="gap: 24px;">
+        <!-- Receta 1 -->
+        <div class="recipe-card" data-reveal>
+          <div style="padding: 40px;">
+            <span class="recipe-tag" style="background: var(--old-gold); color: var(--graphite);">Clásica</span>
+            <h3 class="h3" style="margin-top: 24px; font-size: 28px;">NY Cheesecake</h3>
+            <p style="margin-top: 16px; font-size: 15px; opacity: 0.7;">El estándar de oro. El Philly evita grietas gracias a su red elástica.</p>
+          </div>
+          <div style="padding: 24px 40px; background: rgba(0,0,0,0.05); border-top: 1px solid rgba(0,0,0,0.05);">
+            <p class="meta" style="font-weight: 700; color: var(--royal-blue);">Rol: Estructura térmica</p>
+          </div>
+        </div>
+        <!-- Receta 2 -->
+        <div class="recipe-card" data-reveal>
+          <div style="padding: 40px;">
+            <span class="recipe-tag" style="background: var(--old-gold); color: var(--graphite);">Clásica</span>
+            <h3 class="h3" style="margin-top: 24px; font-size: 28px;">Bagel con Lox</h3>
+            <p style="margin-top: 16px; font-size: 15px; opacity: 0.7;">El "schmear" que equilibra la sal del salmón ahumado.</p>
+          </div>
+          <div style="padding: 24px 40px; background: rgba(0,0,0,0.05); border-top: 1px solid rgba(0,0,0,0.05);">
+            <p class="meta" style="font-weight: 700; color: var(--royal-blue);">Rol: Balance de acidez</p>
+          </div>
+        </div>
+        <!-- Receta 3 -->
+        <div class="recipe-card" data-reveal>
+          <div style="padding: 40px;">
+            <span class="recipe-tag" style="background: var(--royal-blue); color: white;">Técnica</span>
+            <h3 class="h3" style="margin-top: 24px; font-size: 28px;">Frosting de Carrot</h3>
+            <p style="margin-top: 16px; font-size: 15px; opacity: 0.7;">Aporta cuerpo y corta el dulzor extremo del azúcar glas.</p>
+          </div>
+          <div style="padding: 24px 40px; background: rgba(0,0,0,0.05); border-top: 1px solid rgba(0,0,0,0.05);">
+            <p class="meta" style="font-weight: 700; color: var(--royal-blue);">Rol: Estabilización</p>
+          </div>
+        </div>
+        <!-- Receta 4 -->
+        <div class="recipe-card" data-reveal>
+          <div style="padding: 40px;">
+            <span class="recipe-tag" style="background: var(--royal-blue); color: white;">Técnica</span>
+            <h3 class="h3" style="margin-top: 24px; font-size: 28px;">Dip de Alcachofas</h3>
+            <p style="margin-top: 16px; font-size: 15px; opacity: 0.7;">Matriz que evita que la grasa se separe al hornear.</p>
+          </div>
+          <div style="padding: 24px 40px; background: rgba(0,0,0,0.05); border-top: 1px solid rgba(0,0,0,0.05);">
+            <p class="meta" style="font-weight: 700; color: var(--royal-blue);">Rol: Emulsionante</p>
+          </div>
+        </div>
+        <!-- Receta 5 -->
+        <div class="recipe-card" data-reveal>
+          <div style="padding: 40px;">
+            <span class="recipe-tag" style="background: var(--royal-blue); color: white;">Técnica</span>
+            <h3 class="h3" style="margin-top: 24px; font-size: 28px;">Huevos Ramsay</h3>
+            <p style="margin-top: 16px; font-size: 15px; opacity: 0.7;">Frena la cocción de golpe para un revuelto de terciopelo.</p>
+          </div>
+          <div style="padding: 24px 40px; background: rgba(0,0,0,0.05); border-top: 1px solid rgba(0,0,0,0.05);">
+            <p class="meta" style="font-weight: 700; color: var(--royal-blue);">Rol: Choque térmico</p>
+          </div>
+        </div>
+        <!-- Receta 6 -->
+        <div class="recipe-card" data-reveal>
+          <div style="padding: 40px;">
+            <span class="recipe-tag" style="background: var(--old-gold); color: var(--graphite);">Clásica</span>
+            <h3 class="h3" style="margin-top: 24px; font-size: 28px;">Salmón Papillote</h3>
+            <p style="margin-top: 16px; font-size: 15px; opacity: 0.7;">Base para salsas instantáneas sin necesidad de reducir nata.</p>
+          </div>
+          <div style="padding: 24px 40px; background: rgba(0,0,0,0.05); border-top: 1px solid rgba(0,0,0,0.05);">
+            <p class="meta" style="font-weight: 700; color: var(--royal-blue);">Rol: Cuerpo sedoso</p>
+          </div>
+        </div>
+        <!-- Receta 7 -->
+        <div class="recipe-card" data-reveal>
+          <div style="padding: 40px;">
+            <span class="recipe-tag" style="background: var(--royal-blue); color: white;">Técnica</span>
+            <h3 class="h3" style="margin-top: 24px; font-size: 28px;">Pasta Cremosa</h3>
+            <p style="margin-top: 16px; font-size: 15px; opacity: 0.7;">Emulsión rápida con agua de cocción para salsas imposibles.</p>
+          </div>
+          <div style="padding: 24px 40px; background: rgba(0,0,0,0.05); border-top: 1px solid rgba(0,0,0,0.05);">
+            <p class="meta" style="font-weight: 700; color: var(--royal-blue);">Rol: Salsa estable</p>
+          </div>
+        </div>
+        <!-- Receta 8 -->
+        <div class="recipe-card" data-reveal>
+          <div style="padding: 40px;">
+            <span class="recipe-tag" style="background: var(--royal-blue); color: white;">Técnica</span>
+            <h3 class="h3" style="margin-top: 24px; font-size: 28px;">Mousse de Salmón</h3>
+            <p style="margin-top: 16px; font-size: 15px; opacity: 0.7;">Estabiliza la espuma sin gelatina, pura ingeniería de aire.</p>
+          </div>
+          <div style="padding: 24px 40px; background: rgba(0,0,0,0.05); border-top: 1px solid rgba(0,0,0,0.05);">
+            <p class="meta" style="font-weight: 700; color: var(--royal-blue);">Rol: Agente estructurante</p>
+          </div>
+        </div>
+        <!-- Receta 9 -->
+        <div class="recipe-card" data-reveal>
+          <div style="padding: 40px;">
+            <span class="recipe-tag" style="background: var(--old-gold); color: var(--graphite);">Clásica</span>
+            <h3 class="h3" style="margin-top: 24px; font-size: 28px;">Rollitos Pepino</h3>
+            <p style="margin-top: 16px; font-size: 15px; opacity: 0.7;">Funciona como pegamento cremoso que liga sin humedecer.</p>
+          </div>
+          <div style="padding: 24px 40px; background: rgba(0,0,0,0.05); border-top: 1px solid rgba(0,0,0,0.05);">
+            <p class="meta" style="font-weight: 700; color: var(--royal-blue);">Rol: Adhesivo culinario</p>
+          </div>
+        </div>
+        <!-- Receta 10 -->
+        <div class="recipe-card" data-reveal>
+          <div style="padding: 40px;">
+            <span class="recipe-tag" style="background: var(--old-gold); color: var(--graphite);">Clásica</span>
+            <h3 class="h3" style="margin-top: 24px; font-size: 28px;">Tarta de Puerros</h3>
+            <p style="margin-top: 16px; font-size: 15px; opacity: 0.7;">Suaviza quesos fuertes y crea una crema homogénea.</p>
+          </div>
+          <div style="padding: 24px 40px; background: rgba(0,0,0,0.05); border-top: 1px solid rgba(0,0,0,0.05);">
+            <p class="meta" style="font-weight: 700; color: var(--royal-blue);">Rol: Balance de sabor</p>
+          </div>
+        </div>
+        <!-- Receta 11 -->
+        <div class="recipe-card" data-reveal>
+          <div style="padding: 40px;">
+            <span class="recipe-tag" style="background: var(--royal-blue); color: white;">Técnica</span>
+            <h3 class="h3" style="margin-top: 24px; font-size: 28px;">Whipped Miel</h3>
+            <p style="margin-top: 16px; font-size: 15px; opacity: 0.7;">Atemperado a 22°C permite duplicar su volumen con aire.</p>
+          </div>
+          <div style="padding: 24px 40px; background: rgba(0,0,0,0.05); border-top: 1px solid rgba(0,0,0,0.05);">
+            <p class="meta" style="font-weight: 700; color: var(--royal-blue);">Rol: Aireación (G' > G'')</p>
+          </div>
+        </div>
+        <!-- Receta 12 -->
+        <div class="recipe-card" data-reveal>
+          <div style="padding: 40px;">
+            <span class="recipe-tag" style="background: var(--old-gold); color: var(--graphite);">Clásica</span>
+            <h3 class="h3" style="margin-top: 24px; font-size: 28px;">Sushi Casero</h3>
+            <p style="margin-top: 16px; font-size: 15px; opacity: 0.7;">El bastón de grasa untable que define el Philadelphia Roll.</p>
+          </div>
+          <div style="padding: 24px 40px; background: rgba(0,0,0,0.05); border-top: 1px solid rgba(0,0,0,0.05);">
+            <p class="meta" style="font-weight: 700; color: var(--royal-blue);">Rol: Cohesión interna</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wave-container">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--white)"/></svg>
+    </div>
+
+    <!-- [8] POLÉMICAS & DATOS -->
+    <section class="section zone-white" id="controversies">
+      <div class="container grid-2" style="margin-bottom: 120px;">
+        <div class="stack" data-reveal>
+          <span class="eyebrow-pill">Hablemos de verdad</span>
+          <h2 class="h2">Nada es perfecto, <br>ni el queso.</h2>
+          <div class="stack" style="gap: 16px; margin-top: 32px;">
+            <div class="controversy-pill" onclick="this.classList.toggle('open')">
+              <h3 class="h3" style="font-size: 20px;">¿Es realmente queso?</h3>
+              <div class="controversy-content">
+                <p class="meta">Artesanos europeos arquean la ceja ante las gomas y la homogeneización. Pero legalmente, es el rey del queso no madurado.</p>
+              </div>
+            </div>
+            <div class="controversy-pill" onclick="this.classList.toggle('open')">
+              <h3 class="h3" style="font-size: 20px;">Huella de Carbono</h3>
+              <div class="controversy-content">
+                <p class="meta">La industria láctea pesa. Cada kilo de queso arrastra una mochila de ~10kg de CO2. Un reto para 2030.</p>
+              </div>
+            </div>
+            <div class="controversy-pill" onclick="this.classList.toggle('open')">
+              <h3 class="h3" style="font-size: 20px;">Bienestar Animal</h3>
+              <div class="controversy-content">
+                <p class="meta">La producción masiva exige rigor ético. El debate sobre el confinamiento está más vivo que nunca.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="stack" style="align-items: center;" data-reveal id="facts">
+          <div class="stat-circle">
+            <span class="stat-val num" data-target="100">0</span>
+            <span class="stat-label">Países</span>
+          </div>
+          <div class="stat-circle">
+            <span class="stat-val num" data-target="2830" data-unit="M">$0</span>
+            <span class="stat-label">Ventas EE.UU.</span>
+          </div>
+          <div class="stat-circle">
+            <span class="stat-val num" data-target="150">0</span>
+            <span class="stat-label">Años</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- [10] FOOTER: Zona Blue -->
+    <footer class="section zone-blue" style="padding-top: 120px; border-radius: 80px 80px 0 0;">
+      <div class="container grid-3">
+        <div class="stack">
+          <h2 class="h3" style="font-weight: 900; font-size: 32px; font-family: var(--font-display);">Philly.</h2>
+          <p class="meta" style="color: white; opacity: 0.7;">Rigurosamente untable. Basado en investigación académica de 150 años de historia.</p>
+        </div>
+        <div class="stack">
+          <h4 class="stat-label" style="color: white;">Navegar</h4>
+          <a href="#definition" style="font-size: 14px; opacity: 0.8;">Física del Gel</a>
+          <a href="#history" style="font-size: 14px; opacity: 0.8;">Marketing Ficticio</a>
+          <a href="#science" style="font-size: 14px; opacity: 0.8;">Laboratorio Bio</a>
+        </div>
+        <div class="stack">
+          <h4 class="stat-label" style="color: white;">Cultura</h4>
+          <a href="#recipes" style="font-size: 14px; opacity: 0.8;">Recetario Técnico</a>
+          <a href="#controversies" style="font-size: 14px; opacity: 0.8;">Ética Láctea</a>
+          <a href="#" style="font-size: 14px; opacity: 0.8;">Referencias (PDF)</a>
+        </div>
+      </div>
+      <div class="container" style="margin-top: 80px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; font-size: 12px; opacity: 0.5;">
+        <span>© 2026 Philadelphia · Rediseño Vibrante</span>
+        <span>Divulgación Científica Láctea</span>
+      </div>
+    </footer>
+  </main>
+
+  <audio id="bg-music" loop preload="auto">
+    <source src="Untitled.wav" type="audio/wav">
+  </audio>
+
+  <button class="audio-control" id="audio-toggle" aria-label="Reproducir música de fondo" title="Música de fondo">
+    <svg id="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    <svg id="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+  </button>
+
+  <script>
+    // Navigation highlight
+    const topnav = document.getElementById('topnav');
+    const sections = document.querySelectorAll('section[id]');
+    
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        topnav.classList.add('scrolled');
+      } else {
+        topnav.classList.remove('scrolled');
+      }
+
+      let current = "";
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 150) {
+          current = section.getAttribute("id");
+        }
+      });
+
+      document.querySelectorAll('.nav-links a').forEach((a) => {
+        a.classList.remove("active");
+        if (a.getAttribute("href") === `#${current}`) {
+          a.classList.add("active");
+        }
+      });
+    });
+
+    // Intersection Observer for Reveal
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          
+          // Trigger counters if they are in this element
+          const counters = entry.target.querySelectorAll('.num[data-target]');
+          counters.forEach(countUp);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+    // Animated Counters
+    function countUp(el) {
+      if (el.dataset.animated === "true") return;
+      el.dataset.animated = "true";
+      
+      const target = +el.dataset.target;
+      const unit = el.dataset.unit || "";
+      let count = 0;
+      const duration = 2000;
+      const step = target / (duration / 16);
+
+      const update = () => {
+        count += step;
+        if (count < target) {
+          el.innerText = (unit === "$" ? "$" : "") + Math.floor(count) + unit;
+          requestAnimationFrame(update);
+        } else {
+          el.innerText = (unit === "$" ? "$" : "") + target + unit;
+        }
+      };
+      update();
+    }
+
+    // Background music
+    const bgMusic = document.getElementById('bg-music');
+    const audioToggle = document.getElementById('audio-toggle');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+    bgMusic.volume = 0.35;
+
+    function setPlaying(playing) {
+      audioToggle.classList.toggle('playing', playing);
+      iconPlay.style.display = playing ? 'none' : 'block';
+      iconPause.style.display = playing ? 'block' : 'none';
+      audioToggle.setAttribute('aria-label', playing ? 'Pausar música de fondo' : 'Reproducir música de fondo');
+    }
+
+    function toggleMusic() {
+      if (bgMusic.paused) {
+        bgMusic.play().then(() => setPlaying(true)).catch(() => {});
+      } else {
+        bgMusic.pause();
+        setPlaying(false);
+      }
+    }
+
+    audioToggle.addEventListener('click', toggleMusic);
+
+    document.addEventListener('click', function startOnInteraction() {
+      if (bgMusic.paused) {
+        bgMusic.play().then(() => setPlaying(true)).catch(() => {});
+      }
+      document.removeEventListener('click', startOnInteraction);
+    }, { once: true });
+  </script>
+</body>
+</html>
